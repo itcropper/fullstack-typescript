@@ -6,6 +6,8 @@ import { apiRouter } from './routes/api-router';
 import { pagesRouter } from './routes/pages-router';
 import { staticsRouter } from './routes/statics-router';
 
+require('dotenv').config()
+
 console.log(`The App version is ${getVersion()}`);
 
 const app = express();

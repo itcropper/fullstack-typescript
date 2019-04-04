@@ -1,7 +1,6 @@
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
-import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
@@ -10,7 +9,6 @@ const css = require('./Home.css');
 const logoImg = require('../../../assets/images/logo.png');
 
 export const Home: React.FunctionComponent = () => (
-  <Grid item xs={12}>
     <Card>
       <CardHeader title='FullStack React with TypeScript' />
       <CardContent>
@@ -33,5 +31,4 @@ export const Home: React.FunctionComponent = () => (
         </Typography>
       </CardContent>
     </Card>
-  </Grid>
 );

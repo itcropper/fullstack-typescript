@@ -54,18 +54,18 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              modules: true,
-              camelCase: true,
-              sourceMap: !config.IS_PRODUCTION,
+              modules: false,
+              //camelCase: true,
+              //sourceMap: !config.IS_PRODUCTION,
             },
           },
-          {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: !config.IS_PRODUCTION,
-              plugins: config.IS_PRODUCTION ? [] : [cssnano()],
-            },
-          },
+          // {
+          //   loader: 'postcss-loader',
+          //   options: {
+          //     //sourceMap: !config.IS_PRODUCTION,
+          //     //plugins: config.IS_PRODUCTION ? [] : [cssnano()],
+          //   },
+          // },
         ],
       },
       {
