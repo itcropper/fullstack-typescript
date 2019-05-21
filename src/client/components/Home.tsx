@@ -12,7 +12,7 @@ export const Home: React.FunctionComponent = () => (
     <Card>
       <CardHeader title='FullStack React with TypeScript' />
       <CardContent>
-        <img src={logoImg} className={css.logo} />
+        <img src={logoImg} width="100px" className={css.logo} />
         <Typography variant='subheading'>
           This is a starter kit to get you up and running with React &
           TypeScript on top of material-ui.

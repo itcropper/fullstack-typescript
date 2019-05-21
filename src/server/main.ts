@@ -5,8 +5,23 @@ import * as config from './config';
 import { apiRouter } from './routes/api-router';
 import { pagesRouter } from './routes/pages-router';
 import { staticsRouter } from './routes/statics-router';
+import * as mongoose from 'mongoose';
 
 require('dotenv').config()
+
+var SERVER_PORT = Number(process.env.PORT || 8080);
+var MONGOOSE_URL =
+  process.env.MONGOLAB_URI || 
+  process.env.MONGOHQ_URL  || 
+  'mongodb://localhost:27017';
+
+mongoose.connect(MONGOOSE_URL, null, function(err) {
+  if (err) { 
+      console.log ('ERROR connecting to: --> ' + MONGOOSE_URL + '. ' + err);
+  } else {
+      console.log ('Succeeded connected to: ' + MONGOOSE_URL);
+  }
+});
 
 console.log(`The App version is ${getVersion()}`);
 

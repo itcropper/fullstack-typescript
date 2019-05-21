@@ -35,7 +35,7 @@ class Import extends Component {
     handleSubmit(e) {
         e.preventDefault();
 
-        const url = "/api/table/post",
+        const url = "/api/table",
               formData = new FormData(),
               config = {
                   headers: {

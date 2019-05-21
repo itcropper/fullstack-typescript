@@ -1,0 +1,10 @@
+.bar{
+    fill: rgba(100, 100, 100, .3);
+
+}
+.bar:hover {
+    fill: rgba(200, 100, 100, .8);
+}
+text{
+    color: white;
+}

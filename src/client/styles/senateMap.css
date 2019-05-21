@@ -1,0 +1,17 @@
+
+.senate-map-tooltip {	
+    position: absolute;			
+    text-align: center;							
+    padding: 2px;				
+    font: 12px sans-serif;		
+    background: lightsteelblue;	
+    border: 0px;		
+    border-radius: 8px;			
+    pointer-events: none;			
+}
+
+.mug-shot {
+  height: 50px; 
+    border:2px solid white;
+  border-radius: 25px;
+}
