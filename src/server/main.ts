@@ -5,7 +5,7 @@ import * as config from './config';
 import { apiRouter } from './routes/api-router';
 import { pagesRouter } from './routes/pages-router';
 import { staticsRouter } from './routes/statics-router';
-import * as mongoose from 'mongoose';
+import * as mongoose from 'mongoose'
 
 require('dotenv').config()
 
