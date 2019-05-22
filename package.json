@@ -10,7 +10,7 @@
     "test": "jest",
     "clean": "rm -rf dist",
     "lint": "tslint -c tslint.json 'src/**/*.ts' 'src/**/*.tsx'",
-    "build-client": "cross-env NODE_ENV=production webpack -p",
+    "build-client": "NODE_ENV=production webpack -p",
     "dev-client": "webpack-dev-server -w",
     "dev-client:hot": "webpack-dev-server -w --hot",
     "build-server": "tsc -p ./src/server",
@@ -18,7 +18,7 @@
     "dev": "npm run clean && concurrently --prefix \"[{name}]\" --names \"SERVER,CLIENT\" -c \"bgBlue.bold,bgGreen.bold\" \"npm run dev-server\" \"npm run dev-client\"",
     "dev:hot": "npm run clean && concurrently --prefix \"[{name}]\" --names \"SERVER,CLIENT\" -c \"bgBlue.bold,bgGreen.bold\" \"npm run dev-server\" \"npm run dev-client:hot\"",
     "build": "npm run clean && concurrently --prefix \"[{name}]\" --names \"SERVER,CLIENT\" -c \"bgBlue.bold,bgGreen.bold\" \"npm run build-server\" \"npm run build-client\"",
-    "start": "npm run build && NODE_ENV=production DEBUG_PROD=true node index.js"
+    "start": "NODE_ENV=production node index.js"
   },
   "prettier": {
     "trailingComma": "all",
