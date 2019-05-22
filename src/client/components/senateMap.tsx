@@ -6,12 +6,12 @@ import { scaleLinear, scaleBand } from 'd3-scale';
 import { max } from 'd3-array';
 import { select } from 'd3-selection';
 import { DescribeKeyPairsRequest } from 'aws-sdk/clients/ec2';
-import { Desk, PartyColor } from '../utils/SenateDesk';
-import {IVoteResult} from "./SenateVoting";
+import { Desk, PartyColor, VoteResult } from '../utils/SenateDesk';
+import { svg } from 'd3';
 
 
 export interface ISenateMapProps {
-    votingLines:{ vote: IVoteResult, lis: string }[]
+    votingLines:{ vote: VoteResult, lis: string }[]
 }
 
 class SenateMap extends Component<ISenateMapProps>{
@@ -44,7 +44,7 @@ class SenateMap extends Component<ISenateMapProps>{
     handleMouseOver(seat: Desk){
 
         var name = seat.name.split(', ').reverse().join(' '),
-            voteStatus = seat.voteStatus != "" ? `<p>Vote: ${seat.voteStatus}` : "",
+            voteStatus = seat.voteStatus != "" ? `<p>Vote: ${seat.voteStatus == VoteResult.abstain ? "Abstain" : seat.voteStatus}` : "",
             html = `<p>${name}</p>
                 ${voteStatus}
                 <div class="mug-container">
@@ -109,12 +109,72 @@ class SenateMap extends Component<ISenateMapProps>{
     updateColors(data: Desk[]){
         const node = this.node || {};
 
+        function nextSpot(){
+            var yayX = 50,
+                yayY = this.node.clientHeight - 50,
+                nayX = this.node.clientWidth - 50,
+                nayY = this.node.clientHeight - 50,
+                bX = 25,
+                bY = yayY + 30,
+                cHeight = this.node.clientHeight - 50,
+                marginTop = 100,
+                colWidth = 50,
+                rowHeight = 30;
+
+            return function(vote: VoteResult){
+                var coords;
+                if(vote == VoteResult.yea){
+                    if(yayY < marginTop){
+                        yayY = cHeight;
+                        yayX += colWidth;
+                        return {x: yayX, y: yayY};
+                    }
+                    return {x: yayX, y: yayY -= rowHeight};
+                }
+                if(vote == VoteResult.nay){
+                    if(nayY < marginTop){
+                        nayY = cHeight;
+                        nayX -= colWidth;
+                        return {x: nayX, y: nayY};
+                    }
+                    return {x: nayX, y: nayY -= rowHeight};
+                }
+                // if(vote == VoteResult.abstain){
+                //     bX+= 50;
+                //     return {x: bX, y: bY}
+                // }
+                var place = {x: bX, y: bY};
+                bX += 25;
+                return place;
+                
+            }
+        }
+
+        var ns = nextSpot.call(this);
+
         for(var d of data){
-            select(node)
+            var curDot = select(node)
             .select("#" + d.lis)
             .transition().duration(1000)
             // .attr('stroke', d => d.stroke())
-            .attr('fill', d.fill());
+            .attr('cy', (c: Desk) => {
+                var y = ns(c.voteStatus);
+                return y ? y.y : c.y;
+            })
+            .attr('cx', (c: Desk) => {
+                let x =ns(c.voteStatus);
+                return x ? x.x : c.x;
+            })
+            .attr('r', (c: Desk) => c.baseR)
+            .attr('transform', 'translate(0,0)');
+            if(d.voteStatus == VoteResult.abstain){
+                curDot.attr('fill', PartyColor.nay);
+            }else if(d.voteStatus == VoteResult.absent){
+                curDot.attr('fill', PartyColor.abstain);
+                console.log("Absent", d.name)
+            }else{
+                curDot.attr('fill', (c: Desk) => c.fill());
+            }
         }
 
 
@@ -123,8 +183,6 @@ class SenateMap extends Component<ISenateMapProps>{
 
     getData(cb){
         d3.json('https://theunitedstates.io/congress-legislators/legislators-current.json').then((res:any[]) => {
-           //console.log(res);
-           
 
            this.desks = this.desks.map(d => {
             let name = d.name.replace(",", '').split(' '),
@@ -186,29 +244,35 @@ class SenateMap extends Component<ISenateMapProps>{
         return desks.flat(3);
     }
 
+    displayLabels() {
+        select(this.node).append('text').text('Hello').attr('color', 'black').attr('fill', "black");
+    }
+
     componentWillReceiveProps(nextProps){
         if(nextProps.votingLines && nextProps.votingLines.length){
            
-            let d: { vote_id: IVoteResult, lis: string };
+            let d: { vote_id: VoteResult, lis: string };
             for(d of nextProps.votingLines){
                 let legis = this.desks.filter(m => m.lis == d.lis)[0];
                 if(legis != undefined){
-                    if(d.vote_id == IVoteResult.nay){
-                        legis.fill(PartyColor.nay)
-                        legis.voteStatus = "Nay";
-                    }else if(d.vote_id == IVoteResult.yea){
-                        legis.fill(PartyColor.yeah);
-                        legis.voteStatus = "Yea";
-                    }else if(d.vote_id == IVoteResult.none){
-                        legis.fill(PartyColor.abstain);
-                        legis.voteStatus = "Abstain";
+                    if(d.vote_id == VoteResult.nay){
+                        //legis.fill(PartyColor.nay)
+                        legis.voteStatus = VoteResult.nay;
+                    }else if(d.vote_id == VoteResult.yea){
+                        //legis.fill(PartyColor.yeah);
+                        legis.voteStatus = VoteResult.yea
+                    }else if(d.vote_id == VoteResult.abstain){
+                        //legis.fill(PartyColor.abstain);
+                        legis.voteStatus = VoteResult.abstain
                     }else{
-                        legis.voteStatus = "Absent";
+                        legis.voteStatus = VoteResult.absent;
                     }
                 }
             }
+            this.updateColors(this.desks);
+            this.displayLabels();
         }
-        this.updateColors(this.desks);
+        
     }
 
     componentWillMount() {
@@ -390,7 +454,7 @@ class SenateMap extends Component<ISenateMapProps>{
         <svg 
             ref={node => this.node = node}
             width={1000} 
-            height={600}
+            height={700}
             >
 
         </svg>);

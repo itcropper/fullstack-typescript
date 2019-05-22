@@ -34,5 +34,6 @@ app.use(staticsRouter());
 app.use(pagesRouter());
 
 app.listen(config.SERVER_PORT, () => {
+  console.log('ENV ===========>', process.env.NODE_ENV)
   console.log(`App listening on port ${config.SERVER_PORT}!`);
 });

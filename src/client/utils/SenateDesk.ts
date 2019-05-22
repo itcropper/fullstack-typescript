@@ -11,6 +11,14 @@ export enum PartyColor {
     abstain = "#fff"
 }
 
+export enum VoteResult {
+    abstain = "Not Voting",
+    yea = "Yea",
+    nay = "Nay",
+    absent = "absent",
+    none = ""
+  }
+
 export class Desk {
 
     private innerPadding: number;
@@ -20,11 +28,12 @@ export class Desk {
     public x: number;
     public y: number;
     public r: number;
+    public baseR: number;
     public lis: string;
     public bioguide: string;
     public meta: any;
     public a: number;
-    public voteStatus: "Yea" | "Nay" | "Abstain" | "Absent" | "";
+    public voteStatus: VoteResult;
     
     private color: PartyColor;
 
@@ -34,6 +43,7 @@ export class Desk {
         this.innerPadding = this.row * 70 + 80;
         
         this.r = (10 * (4 + Math.pow(this.row, 1.4)) / 5) - 3;
+        this.baseR = (10 * (4 + Math.pow(4, 1.4)) / 5) - 3;
 
         this.angle(a || 0);
         
@@ -41,7 +51,7 @@ export class Desk {
         this.bioguide;
         this.meta = null;
 
-        this.voteStatus = "";
+        this.voteStatus = VoteResult.none;
       }
 
     angle(a){

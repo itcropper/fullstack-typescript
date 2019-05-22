@@ -10,8 +10,7 @@
     "test": "jest",
     "clean": "rimraf dist",
     "lint": "tslint -c tslint.json 'src/**/*.ts' 'src/**/*.tsx'",
-    "start": "node index.js",
-    "start:prod": "cross-env NODE_ENV=production node index.js",
+    
     "build-client": "cross-env NODE_ENV=production webpack -p",
     "dev-client": "webpack-dev-server -w",
     "dev-client:hot": "webpack-dev-server -w --hot",
@@ -19,7 +18,8 @@
     "dev-server": "tsc-watch -p ./src/server --onSuccess \"node index.js\"",
     "dev": "npm run clean && concurrently --prefix \"[{name}]\" --names \"SERVER,CLIENT\" -c \"bgBlue.bold,bgGreen.bold\" \"npm run dev-server\" \"npm run dev-client\"",
     "dev:hot": "npm run clean && concurrently --prefix \"[{name}]\" --names \"SERVER,CLIENT\" -c \"bgBlue.bold,bgGreen.bold\" \"npm run dev-server\" \"npm run dev-client:hot\"",
-    "build": "npm run clean && concurrently --prefix \"[{name}]\" --names \"SERVER,CLIENT\" -c \"bgBlue.bold,bgGreen.bold\" \"npm run build-server\" \"npm run build-client\""
+    "build": "npm run clean && concurrently --prefix \"[{name}]\" --names \"SERVER,CLIENT\" -c \"bgBlue.bold,bgGreen.bold\" \"npm run build-server\" \"npm run build-client\"",
+    "start": "npm run build && cross-env NODE_ENV=production DEBUG_PROD=true npm start"
   },
   "prettier": {
     "trailingComma": "all",

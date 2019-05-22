@@ -5,16 +5,12 @@ import SenateMap from "./senateMap";
 import VotingList from "./VotingList";
 import VoteDetails from "./VoteDetails";
 import VoteFilter from "./VoteFilter";
+import { VoteResult } from "../utils/SenateDesk";
 
-export enum IVoteResult {
-  none = "Not Voting",
-  yea = "Yea",
-  nay = "Nay"
-}
 
 interface ISenateVotingState {
   vote_id: string,
-  voting_results: { vote: IVoteResult, lis: string }[],
+  voting_results: { vote: VoteResult, lis: string }[],
   listOfVotes: any[]
 }
 
