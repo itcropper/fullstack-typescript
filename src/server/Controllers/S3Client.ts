@@ -1,9 +1,9 @@
-import * as AWS from "aws-sdk";
+//import * as AWS from "aws-sdk";
 import { S3 } from "aws-sdk";
 import * as fs from "fs";
 
 // const AWS:any = require('aws-sdk');
-const client = new AWS.S3({
+const client = new S3({
   accessKeyId: process.env.S3_KEY_ID,
   secretAccessKey: process.env.S3_SECRET
 });

@@ -78,6 +78,7 @@
     "aws-sdk": "^2.460.0",
     "body-parser": "^1.18.3",
     "busboy": "^0.3.1",
+    "concurrently": "^4.1.0",
     "csv": "^5.1.1",
     "csv-parse": "^4.3.4",
     "csvgeocode": "^2.3.1",
@@ -94,6 +95,7 @@
     "node-open-geocoder": "^3.0.0",
     "normalize.css": "^8.0.1",
     "react-bootstrap": "^1.0.0-beta.8",
+    "react-router-dom": "^4.3.1",
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
@@ -126,7 +128,6 @@
     "@types/xml2js": "^0.4.4",
     "axios": "^0.18.0",
     "babel-loader": "^8.0.5",
-    "concurrently": "^4.1.0",
     "cross-env": "^5.2.0",
     "css-loader": "^2.1.0",
     "cssnano": "^4.1.10",
@@ -143,7 +144,6 @@
     "react-dom": "^16.7.0",
     "react-hot-loader": "^4.6.3",
     "react-router": "^4.3.1",
-    "react-router-dom": "^4.3.1",
     "rimraf": "^2.6.3",
     "style-loader": "^0.23.1",
     "ts-jest": "^23.10.5",
