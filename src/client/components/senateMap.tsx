@@ -3,9 +3,9 @@ import "normalize.css";
 import "../styles/senateMap.css";
 import * as d3 from "d3";
 import { scaleLinear, scaleBand } from 'd3-scale';
-import { max } from 'd3-array';
+//import { max } from 'd3-array';
 import { select } from 'd3-selection';
-import { DescribeKeyPairsRequest } from 'aws-sdk/clients/ec2';
+//import { DescribeKeyPairsRequest } from 'aws-sdk/clients/ec2';
 import { Desk, PartyColor, VoteResult } from '../utils/SenateDesk';
 import { svg } from 'd3';
 
